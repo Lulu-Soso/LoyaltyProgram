@@ -1,0 +1,22 @@
+{% extends "base.html.twig" %}
+
+{% block title %}All purchases {% endblock %}
+
+{% block body %}
+	<h1>All purchases:</h1>
+	{% for purchase in purchases %}
+		<div>
+			<h2>{{ loop.index}} /  {{purchase.userName}} - {{purchase.serviceName}} - {{purchase.price}}</h2>
+				
+	
+				
+		</div>
+
+		{% else %}
+		No purchase founded.
+
+	{% endfor %}
+    <br>
+	<a href="{{path('purchase_new')}}">new purchase</a>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Discount purchases {% endblock %}
+
+{% block body %}
+
+
+{#Une fois l'id trouvé, on récupère le nom utilisateur#}
+    $varName1 = {{purchase.userName}}
+
+{% for purchase in purchases %}
+    $varName2 = {{purchase.userName}}
+    {% if (strcmp($varName1, $varName2) == 0)%}
+        i += i
+         {% if i == 2 %}
+            $discount = 1
+         {% endif %}
+    {% endif %}       
+{% endfor %}
+
+
+
+
+
+{% endblock %}
