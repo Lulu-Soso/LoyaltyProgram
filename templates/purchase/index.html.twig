@@ -4,6 +4,8 @@
 
 {% block body %}
 	<h1>All purchases:</h1>
+	<br>
+	<div class="purchase">
 	{% for purchase in purchases %}
 		<div>
 			<h2>{{ loop.index}} /  {{purchase.userName}} - {{purchase.serviceName}} - {{purchase.price}}</h2>
@@ -17,6 +19,8 @@
 
 	{% endfor %}
     <br>
+	<h3>
 	<a href="{{path('purchase_new')}}">new purchase</a>
-
+	</h3>
+	</div>
 {% endblock %}
