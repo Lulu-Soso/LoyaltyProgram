@@ -1,0 +1,26 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Discount purchases {% endblock %}
+
+{% block body %}
+
+
+
+nom utilisateur : {{userName}}
+<br>
+<br>
+Nombre d'achats effectués : {{nbreUser}}
+<br>
+<br>
+
+{% if  discountOk == 1 %}
+    Bravo, le discount s'applique.
+{% else %}
+    La remise ne peut s'appliquer.    
+{% endif %}
+<br>
+    <br>
+	<a href="{{path('purchase_index')}}">all purchases</a>
+
+
+{% endblock %}
