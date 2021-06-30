@@ -54,7 +54,7 @@ class PurchaseController extends AbstractController
          // Flush the persisted object
          $entityManager->flush();
          // Finally redirect
-         return $this->redirectToRoute('purchase_index');
+         return $this->redirectToRoute('purchase_discount');
          }
          // Render the form
          return $this->render('purchase/new.html.twig', ["form" => $form->createView()]);
@@ -63,24 +63,34 @@ class PurchaseController extends AbstractController
    /**
      * @Route("discount", name="discount")
      */
-    public function discount(int $id):Response 
+    public function discount():Response 
     {
         
         //récupérer le dernier id de la BDD après création
-        //$rep->findBy(array(), array('id' => 'desc'),1,0);
-    
         
-        //Une fois l'id trouvé, on récupère le nom utilisateur
-        $purchase = $this->getDoctrine()
-            ->getRepository(Purchase::class)
-            ->find($id);
+        $repository = $this->getDoctrine()
+                        ->getManager()
+                        ->getRepository(Purchase::class);
+        $purchases = $repository->findBy(array(), array('id' => 'desc'),1,0);
+        $purchase = $purchases[0];
+        
+        $repositoryName = $this->getDoctrine()
+                        ->getManager()
+                        ->getRepository(Purchase::class);
+        $userName = $purchase->getUserName();    
 
-        if (!$purchase){
-            throw $this->createNotFoundException(
-                'No purchase for this id'. $id
-            );
+        $forDiscounts = $repositoryName->findBy(array('userName' => $userName ));
+        
+        $nbreUser = count($forDiscounts);
+
+        $discountOk = 0;
+        if($nbreUser >= 3) {
+            $discountOk = 1;
         }
-        return $this->render('algo.html.twig', ['purchase' => $purchase]);
+
+
+        return $this->render('purchase/algo.html.twig',
+             ['forDiscounts' => $forDiscounts, 'userName' => $userName, 'nbreUser' => $nbreUser, 'discountOk' => $discountOk]);
 
     }
 
